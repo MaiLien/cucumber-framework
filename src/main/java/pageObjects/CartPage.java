@@ -14,7 +14,7 @@ public class CartPage {
 	@FindBy(how = How.CSS, using = ".cart-button")
 	private WebElement btn_Cart;
 
-	@FindBy(how = How.CSS, using = ".checkout-button.alt")
+	@FindBy(xpath="//a[contains(@class,'checkout-button')]")
 	private WebElement btn_ContinueToCheckout;
 
 	public void clickOn_Cart() {
