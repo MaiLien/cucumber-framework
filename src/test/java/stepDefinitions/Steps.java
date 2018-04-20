@@ -22,16 +22,14 @@ public class Steps {
 	ProductListingPage productListingPage;
 	CartPage cartPage;
 	CheckoutPage checkoutPage;
-	
+
 	PageObjectManager pageObjectManager;
-	
-	ConfigFileReader configProperties = new ConfigFileReader();
 
 	@Given("^user is on Home Page$")
 	public void user_is_on_Home_Page() {
-		System.setProperty("webdriver.gecko.driver", configProperties.getGeckoPath());
+		System.setProperty("webdriver.gecko.driver", (String) ConfigFileReader.getInstance().getGeckoPath());
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(configProperties.getImplicitlyWaitTime(), TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(ConfigFileReader.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
 
 		pageObjectManager = new PageObjectManager(driver);
 		homePage = pageObjectManager.getHomePage();
