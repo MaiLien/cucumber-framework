@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
+import dataProvider.ConfigFileReader;
 import managers.PageObjectManager;
 import pageObjects.CartPage;
 import pageObjects.CheckoutPage;
@@ -21,13 +22,16 @@ public class Steps {
 	ProductListingPage productListingPage;
 	CartPage cartPage;
 	CheckoutPage checkoutPage;
+	
 	PageObjectManager pageObjectManager;
+	
+	ConfigFileReader configProperties = new ConfigFileReader();
 
 	@Given("^user is on Home Page$")
 	public void user_is_on_Home_Page() {
-		System.setProperty("webdriver.gecko.driver", ".\\gecko\\v0.19.0\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", configProperties.getGeckoPath());
 		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(configProperties.getImplicitlyWaitTime(), TimeUnit.SECONDS);
 
 		pageObjectManager = new PageObjectManager(driver);
 		homePage = pageObjectManager.getHomePage();
