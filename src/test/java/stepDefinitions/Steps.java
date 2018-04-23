@@ -51,7 +51,7 @@ public class Steps {
 	@When("^moves to checkout from mini cart$")
 	public void moves_to_checkout_from_mini_cart() {
 		cartPage = pageObjectManager.getCartPage();
-		cartPage.clickOn_Cart();
+		cartPage.moveMouseOverCartIcon();
 		cartPage.clickOn_ContinueToCheckout();
 	}
 
