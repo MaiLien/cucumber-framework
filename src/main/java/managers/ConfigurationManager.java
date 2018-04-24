@@ -1,4 +1,4 @@
-package dataProvider;
+package managers;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,14 +6,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ConfigFileReader {
+import enums.DriverType;
+
+public class ConfigurationManager {
 
 	private static Properties properties = new Properties();;
 	private final String propertyFilePath = "./configs/Configuation.properties";
 
-	private static ConfigFileReader configProperties = new ConfigFileReader();
+	private static ConfigurationManager configProperties = new ConfigurationManager();
 
-	private ConfigFileReader() {
+	private ConfigurationManager() {
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(propertyFilePath));
@@ -29,12 +31,12 @@ public class ConfigFileReader {
 		}
 	}
 
-	public static ConfigFileReader getInstance() {
+	public static ConfigurationManager getInstance() {
 		return configProperties;
 	}
 
-	public Object getProperty(String key) {
-		Object driverPath = properties.getProperty(key);
+	public String getProperty(String key) {
+		String driverPath = properties.getProperty(key);
 		if (driverPath != null)
 			return driverPath;
 		else
@@ -47,6 +49,19 @@ public class ConfigFileReader {
 
 	public Long getImplicitWaitTime() {
 		return Long.parseLong(properties.getProperty("implicitWaitTime"));
+	}
+
+	public DriverType getBrowser() {
+		String browserName = getProperty("browser");
+		if (browserName == null || browserName.equals("firefox"))
+			return DriverType.FIREFOX;
+		else if (browserName.equalsIgnoreCase("chrome"))
+			return DriverType.CHROME;
+		else if (browserName.equals("iexplorer"))
+			return DriverType.INTERNET_EXPLORER;
+		else
+			throw new RuntimeException(
+					"Can not found " + browserName + " property.");
 	}
 
 }
