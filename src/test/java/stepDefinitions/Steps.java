@@ -1,14 +1,11 @@
 package stepDefinitions;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-import dataProvider.ConfigFileReader;
 import managers.PageObjectManager;
+import managers.WebDriverManager;
 import pageObjects.CartPage;
 import pageObjects.CheckoutPage;
 import pageObjects.HomePage;
@@ -24,12 +21,12 @@ public class Steps {
 	CheckoutPage checkoutPage;
 
 	PageObjectManager pageObjectManager;
+	
+	WebDriverManager webDriverManager = new WebDriverManager();
 
 	@Given("^user is on Home Page$")
 	public void user_is_on_Home_Page() {
-		System.setProperty("webdriver.gecko.driver", (String) ConfigFileReader.getInstance().getGeckoPath());
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(ConfigFileReader.getInstance().getImplicitWaitTime(), TimeUnit.SECONDS);
+		driver = webDriverManager.getDriver();
 
 		pageObjectManager = new PageObjectManager(driver);
 		homePage = pageObjectManager.getHomePage();
